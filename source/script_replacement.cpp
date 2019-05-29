@@ -38,7 +38,7 @@ u64 appeal_hi_replace(L2CAgent* l2c_agent, void* variadic) {
 	acmd.frame(1);
 	if (acmd.is_excute()) {
 		HITBOX_VIS = (HITBOX_VIS + 1) % NUM_VIS_STATES;
-		const char* vis_strings[NUM_VIS_STATES] = {"NONE", "SEE\nDAMAGE", "SEE\nKNOCKBACK"};
+		const char* vis_strings[NUM_VIS_STATES] = {"NONE", "SEE\nDAMAGE", "SEE\nKB"};
 		print_string(acmd.module_accessor, vis_strings[HITBOX_VIS]);
 	}
 
