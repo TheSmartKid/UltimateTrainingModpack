@@ -5,6 +5,8 @@
 #include "saltysd_dynamic.h"
 #include "nn_ro.h"
 
+u64 ANCHOR_ABS;
+
 void (*SaltySD_installed_hook)(char*, u64) = NULL;
 
 int SaltySD_function_replace(u64 addr, u64 new_func) {

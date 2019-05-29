@@ -1,11 +1,11 @@
 #include <switch.h>
+#include <switch/kernel/ipc.h>
 
 #include <string.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/iosupport.h>
 #include <sys/reent.h>
-#include <switch/kernel/ipc.h>
 
 #include "useful.h"
 
@@ -13,13 +13,13 @@
 #include "saltysd_ipc.h"
 #include "saltysd_dynamic.h"
 
-#include "saltysd_helper.hpp"
-#include "l2c_imports.hpp"
-#include "acmd_imports.hpp"
+#include "saltysd_helper.h"
+#include "l2c_imports.h"
+#include "acmd_imports.h"
 
-#include "hitbox_visualizer.hpp"
-#include "script_replacement.hpp"
-#include "training_mods.hpp"
+#include "hitbox_visualizer.h"
+#include "script_replacement.h"
+#include "training_mods.h"
 
 extern "C" {
 	extern u32 __start__;

@@ -3,11 +3,8 @@
 
 #include <switch.h>
 
-#include <math.h>
-
+#include "lua_bind_hash.h"
 #include "useful.h"
-
-#include "lua_bind_hash.hpp"
 
 u64 is_training_mode(void) asm("_ZN3app9smashball16is_training_modeEv") LINKABLE;
 
@@ -59,42 +56,12 @@ namespace lib {
 			//std::string* raw_string;
 		};
 
-		L2CValue() {
-			type = L2C_void;
-		}
-
-		L2CValue(bool val) {
-			type = L2C_bool;
-			raw = val;
-		}
-
-		L2CValue(int val) {
-			type = L2C_integer;
-			raw = val;
-		}
-
-		L2CValue(u64 val) {
-			type = L2C_integer;
-			raw = val;
-		}
-
-		L2CValue(float val) {
-			if (isnan(val)) {
-				type = L2C_void;
-			} else {
-				type = L2C_number;
-				raw_float = val;
-			}
-		}
-
-		L2CValue(double val) {
-			if (isnan(val)) {
-				type = L2C_void;
-			} else {
-				type = L2C_number;
-				raw_float = val;
-			}
-		}
+		L2CValue();
+		L2CValue(bool val);
+		L2CValue(int val);
+		L2CValue(u64 val);
+		L2CValue(float val);
+		L2CValue(double val);
 
 		operator bool() asm("_ZNK3lib8L2CValuecvbEv") LINKABLE;
 
@@ -128,10 +95,7 @@ namespace lib {
 		//__int64_t (*lib_L2CAgent_pop_lua_stack)(__int64_t, int);
 		u64 pop_lua_stack(int index) asm("_ZN3lib8L2CAgent13pop_lua_stackEi") LINKABLE;
 
-		void get_lua_stack(int index, lib::L2CValue* l2c_val) {
-			asm("mov x8, %x0" : : "r"(l2c_val) : "x8" );
-			pop_lua_stack(index);
-		}
+		void get_lua_stack(int index, lib::L2CValue* l2c_val);
 
 		u64 sv_set_function_hash(u64 (*func)(L2CAgent*, void*), u64 hash) asm("_ZN3lib8L2CAgent20sv_set_function_hashEPvN3phx6Hash40E") LINKABLE;
 		u64 clear_lua_stack() asm("_ZN3lib8L2CAgent15clear_lua_stackEv") LINKABLE;
@@ -139,12 +103,12 @@ namespace lib {
 
 	bool lua_bind_get_value(u64, int*) asm("_ZN3lib18lua_bind_get_valueIiEEbmRT_") LINKABLE;
 
-	int lua_const(const char* str) {
-		int val;
-		if (lua_bind_get_value(lua_bind_hash_str(str), &val))
-			return val;
-		else
-			return -1;
+	int lua_const(const char* str);
+
+	namespace utility {
+		namespace Variadic {
+			const char* get_format(void* variadic) asm("_ZNK3lib7utility8Variadic10get_formatEv") LINKABLE;
+		}
 	}
 }
 
