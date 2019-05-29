@@ -5,7 +5,10 @@
 
 // Up Taunt
 // controls whether or not hitbox visualization is enabled
-extern bool HITBOX_VIS;
+#define NUM_VIS_STATES 3
+extern int HITBOX_VIS;
+#define VIS_DAMAGE 1
+#define VIS_KB 2
 
 // Side Taunt
 // controls CPU DI behavior

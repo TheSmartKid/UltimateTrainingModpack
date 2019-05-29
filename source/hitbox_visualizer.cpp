@@ -127,11 +127,11 @@ void app::sv_animcmd::ATTACK_replace(u64 a1) {
 	// original code: parse lua stack and call AttackModule::set_attack()
 	AttackModule_set_attack_lua_state(LOAD64(LOAD64(a1 - 8) + 416LL), a1);
 
-	if (HITBOX_VIS && is_training_mode()) { // generate hitbox effect(s)
-		float color_scale;
-		if (false) { // color intensity scales with damage
+	if (HITBOX_VIS != NONE && is_training_mode()) { // generate hitbox effect(s)
+		float color_scale = 1.0f;
+		if (HITBOX_VIS == VIS_DAMAGE) { // color intensity scales with damage
 			color_scale = unlerp_bounded(1.0f, 18.0f, damage.raw_float);
-		} else { // color intensity scales with total KB
+		} else if (HITBOX_VIS == VIS_KB) { // color intensity scales with KB
 			// calculate the expected KB a character with 95 weight will receive at 80% pre-hit
 			float TARGET_PERCENT = 80.0f;
 			int TARGET_WEIGHT = 95;
