@@ -4,20 +4,26 @@
 #include "useful.h"
 
 /**
- * Rounds a number to the nearest multiple of another number.
+ * Restricts a float to the range [min, max].
  */
-float round_to(float val, float align);
+float clampf(float val, float min, float max);
 
 /**
- * Linearly interpolates between two numbers, without bounds checking.
+ * Rounds a number to the nearest multiple of another number.
  */
-float lerp(float min, float max, float t);
-float unlerp(float min, float max, float val);
+float roundf_to(float val, float align);
+
 /**
- * Linearly interpolates between two numbers, with bounds checking.
+ * Converts a float from one scale to another.
+ * For example, one could convert Fahrenheit temperatures to Celsius with <code>scale(temperature, 32.0f, 212.0f, 0.0f, 100.0f)</code>.
+ * If the last two arguments are not specified, they are assumed to be 0 and 1.
  */
-float lerp_bounded(float min, float max, float t);
-float unlerp_bounded(float min, float max, float val);
+float scalef(float val, float min, float max, float min2 = 0.0f, float max2 = 1.0f);
+
+/**
+ * Same as scalef(), but the final value is always in the range [min2, max2].
+ */
+float scalef_bounded(float val, float min, float max, float min2 = 0.0f, float max2 = 1.0f);
 
 /**
  * Linearly nterpolates between two colors, with bounds checking, accounting for gamma.
@@ -27,6 +33,6 @@ float unlerp_bounded(float min, float max, float val);
  * - t (float) -- how far to interpolate between the colors
  * - gamma (float = 2.0f) -- used for color correction, helps avoid ugly dark colors when interpolating b/t bright colors
  */
-Vector3f color_lerp(Vector3f min_color, Vector3f max_color, float t, float gamma = 2.0f);
+Vector3f color_scalef(float scale, Vector3f min_color, Vector3f max_color, float gamma = 2.0f);
 	
 #endif // USEFUL_VISUAL_H

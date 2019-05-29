@@ -128,9 +128,9 @@ void app::sv_animcmd::ATTACK_replace(u64 a1) {
 	AttackModule_set_attack_lua_state(LOAD64(LOAD64(a1 - 8) + 416LL), a1);
 
 	if (HITBOX_VIS != NONE && is_training_mode()) { // generate hitbox effect(s)
-		float color_scale = 1.0f;
+		float color_scale;
 		if (HITBOX_VIS == VIS_DAMAGE) { // color intensity scales with damage
-			color_scale = unlerp_bounded(1.0f, 18.0f, damage.raw_float);
+			color_scale = scalef(damage.raw_float, 1.0f, 18.0f);
 		} else if (HITBOX_VIS == VIS_KB) { // color intensity scales with KB
 			// calculate the expected KB a character with 95 weight will receive at 80% pre-hit
 			float TARGET_PERCENT = 80.0f;
@@ -143,10 +143,13 @@ void app::sv_animcmd::ATTACK_replace(u64 a1) {
 			}
 			float weight_component = 200.0f / (TARGET_WEIGHT + 100);
 			float kb = (percent_component * weight_component * 1.4f + 18.0f) * (kbg.raw * 0.01f) + bkb.raw;
-			color_scale = unlerp_bounded(50.0f, 200.0f, kb);
+			color_scale = scalef(kb, 50.0f, 200.0f);
+		} else {
+			color_scale = 1.0f; // this should never occur, but just in case
 		}
-		float color_t = 0.6f + 0.4f * powf(color_scale, 0.5f); // non-linear scaling to magnify differences at lower values
-		Vector3f color = color_lerp({ 1.0f, 1.0f, 1.0f }, ID_COLORS[id.raw % 8], color_t);
+		color_scale = clampf(color_scale, 0.0f, 1.0f);
+		color_scale = 0.6f + 0.4f * powf(color_scale, 0.5f); // non-linear scaling to magnify differences at lower values
+		Vector3f color = color_scalef(color_scale, Vector3f{ 1.0f, 1.0f, 1.0f }, ID_COLORS[id.raw % 8]);
 		generate_hitbox_effects(&l2c_agent, &bone, &size, &x, &y, &z, &x2, &y2, &z2, &color);
 	}
 
