@@ -109,20 +109,20 @@ void app::sv_animcmd::ATTACK_replace(u64 a1) {
 
 	// get all necessary hitbox params
 	L2CValue id, bone, damage, angle, kbg, fkb, bkb, size, x, y, z, x2, y2, z2;
-	l2c_agent.get_lua_stack(1, &id); // int
-	l2c_agent.get_lua_stack(3, &bone); // hash40
+	l2c_agent.get_lua_stack(1, &id);     // int
+	l2c_agent.get_lua_stack(3, &bone);   // hash40
 	l2c_agent.get_lua_stack(4, &damage); // float
-	l2c_agent.get_lua_stack(5, &angle); // int
-	l2c_agent.get_lua_stack(6, &kbg); // int
-	l2c_agent.get_lua_stack(7, &fkb); // int
-	l2c_agent.get_lua_stack(8, &bkb); // int
-	l2c_agent.get_lua_stack(9, &size); // float
-	l2c_agent.get_lua_stack(10, &x); // float
-	l2c_agent.get_lua_stack(11, &y); // float
-	l2c_agent.get_lua_stack(12, &z); // float
-	l2c_agent.get_lua_stack(13, &x2); // float or void
-	l2c_agent.get_lua_stack(14, &y2); // float or void
-	l2c_agent.get_lua_stack(15, &z2); // float or void
+	l2c_agent.get_lua_stack(5, &angle);  // int
+	l2c_agent.get_lua_stack(6, &kbg);    // int
+	l2c_agent.get_lua_stack(7, &fkb);    // int
+	l2c_agent.get_lua_stack(8, &bkb);    // int
+	l2c_agent.get_lua_stack(9, &size);   // float
+	l2c_agent.get_lua_stack(10, &x);     // float
+	l2c_agent.get_lua_stack(11, &y);     // float
+	l2c_agent.get_lua_stack(12, &z);     // float
+	l2c_agent.get_lua_stack(13, &x2);    // float or void
+	l2c_agent.get_lua_stack(14, &y2);    // float or void
+	l2c_agent.get_lua_stack(15, &z2);    // float or void
 
 	// original code: parse lua stack and call AttackModule::set_attack()
 	AttackModule_set_attack_lua_state(LOAD64(LOAD64(a1 - 8) + 416LL), a1);
@@ -148,7 +148,7 @@ void app::sv_animcmd::ATTACK_replace(u64 a1) {
 			color_scale = 1.0f; // this should never occur, but just in case
 		}
 		color_scale = clampf(color_scale, 0.0f, 1.0f);
-		color_scale = 0.6f + 0.4f * powf(color_scale, 0.5f); // non-linear scaling to magnify differences at lower values
+		color_scale = 0.625f + 0.375f * powf(color_scale, 0.5f); // non-linear scaling to magnify differences at lower values
 		Vector3f color = color_scalef(color_scale, Vector3f{ 1.0f, 1.0f, 1.0f }, ID_COLORS[id.raw % 8]);
 		generate_hitbox_effects(&l2c_agent, &bone, &size, &x, &y, &z, &x2, &y2, &z2, &color);
 	}

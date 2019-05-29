@@ -104,10 +104,6 @@ const char segment_rev[15] = {
     'n',
 };
 
-// helper methods
-void show_segment(u64 battle_object_module_accessor, float z, float y, float x, float zrot, float size);
-int alphabet_index(char to_print);
-
 void show_segment(u64 battle_object_module_accessor, float z, float y, float x, float zrot, float size) {
     Hash40 raygunShot = { .hash = 0x11e470b07fLL };
     Hash40 top = { .hash = 0x031ed91fcaLL };
@@ -126,7 +122,7 @@ int alphabet_index(char to_print) {
     if (to_print >= 'A' && to_print <= 'Z')
         return to_print - 'A';
     else if (to_print >= '0' && to_print <= '9')
-        return to_print - '0' + 'Z' - 'A' + 1;
+        return to_print - '0' + ('Z' - 'A' + 1);
     else if (to_print == ' ')
         return 36;
     else if (to_print == '-')
