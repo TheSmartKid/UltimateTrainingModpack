@@ -1,7 +1,6 @@
 #include <math.h>
 
 #include "useful.h"
-#include "useful_visual.h"
 
 #include "l2c_imports.h"
 #include "acmd_imports.h"
@@ -11,6 +10,7 @@
 #include "const_value_table.h"
 #include "taunt_toggles.h"
 
+#include "hitbox_visualizer_helper.h"
 #include "hitbox_visualizer.h"
 
 using namespace lib;

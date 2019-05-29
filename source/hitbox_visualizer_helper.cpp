@@ -2,7 +2,7 @@
 
 #include "useful.h"
 
-#include "useful_visual.h"
+#include "hitbox_visualizer_helper.h"
 
 float round_to(float val, float align) {
 	return roundf(val / align) * align;
